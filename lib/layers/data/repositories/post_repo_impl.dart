@@ -8,6 +8,7 @@ import 'package:postapp/layers/domain/repositories/post_repository.dart';
 
 class PostRepoImpl implements PostRepository {
   final _postClient = getIt<PostClient>();
+  List<PostEntity> posts = [];
   @override
   Future<List<PostComments>> getPostComments({required int postId}) async {
     return await _postClient.getPostComments(postId).then((value) {
@@ -24,18 +25,32 @@ class PostRepoImpl implements PostRepository {
 
   @override
   Future<List<PostEntity>> getPosts() async {
-    return await _postClient.getPosts().then((value) {
+    posts = await _postClient.getPosts().then((value) {
       return value
           .map((e) => PostEntity(
               id: e.id, userId: e.userId, title: e.title, body: e.body))
           .toList();
     });
+    return posts;
   }
 
   @override
   Future<UserEntity> getUserById({required int userId}) async {
     return await _postClient.getByUserId(userId).then((value) {
-      return UserEntity(id: value.id, name: value.name, username: value.username, email: value.email, address: value.address, phone: value.phone, website: value.website, company: value.company);
+      return UserEntity(
+          id: value.id,
+          name: value.name,
+          username: value.username,
+          email: value.email,
+          address: value.address,
+          phone: value.phone,
+          website: value.website,
+          company: value.company);
     });
+  }
+
+  @override
+  Future<List<PostEntity>> getPostsByUserId({required int userId}) async {
+    return posts.where((e) => e.userId == userId).toList();
   }
 }

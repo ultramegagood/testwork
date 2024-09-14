@@ -58,6 +58,7 @@ class _MainScreenState extends State<MainScreen> {
                   .read<MainScreenBloc>()
                   .add(const MainScreenEvent.refresh()),
               child: SingleChildScrollView(
+                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

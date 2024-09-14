@@ -27,17 +27,14 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
       },
       appEnd: (_) {},
       searchByUserId: (value) async {
-        List<PostEntity> list =postList
-            .where((e) => e.userId == int.tryParse(value.value))
-            .toList();
-        if(value.value.isNotEmpty) {
-          emit(state.copyWith(
-          postList:list,
-        ));
+        if (value.value.isNotEmpty) {
+          List<PostEntity> list = [];
+          list =
+              await repository.getPostsByUserId(userId: int.parse(value.value));
+          emit(state.copyWith(postList: list, loading: false));
         } else {
-          emit(state.copyWith(
-            postList:postList,
-          ));
+          postList = await repository.getPosts();
+          emit(state.copyWith(postList: postList, loading: false));
         }
       },
     );
