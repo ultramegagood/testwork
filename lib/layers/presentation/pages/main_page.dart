@@ -35,12 +35,6 @@ class _MainScreenState extends State<MainScreen> {
           return Scaffold(
             appBar: AppBar(
               title: const Text("Home"),
-              actions: [
-                IconButton(
-                  onPressed: () => MyApp.of(context)!.changeTheme(),
-                  icon: const Icon(Icons.light_mode),
-                )
-              ],
               centerTitle: true,
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(50.0),

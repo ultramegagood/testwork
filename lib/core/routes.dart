@@ -6,7 +6,9 @@ import 'package:postapp/layers/presentation/pages/post_details_page.dart';
 
 const String home = '/';
 const String userDetail = '/users';
-final router = GoRouter(requestFocus: false, routes: [
+final router = GoRouter(
+
+    requestFocus: false, routes: [
   GoRoute(
     path: home,
     builder: (context, state) => const MainScreen(),
