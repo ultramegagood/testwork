@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:postapp/layers/data/models/user_dto.dart';
 
 class UserEntity extends Equatable {
   final int? id;
@@ -22,30 +23,4 @@ class UserEntity extends Equatable {
 
   @override
   List<Object?> get props => [id];
-}
-
-class Address {
-  String? street;
-  String? suite;
-  String? city;
-  String? zipcode;
-  Geo? geo;
-
-  Address({this.street, this.suite, this.city, this.zipcode, this.geo});
-}
-
-class Geo {
-  String? lat;
-
-  String? lng;
-
-  Geo({this.lat, this.lng});
-}
-
-class Company {
-  String? name;
-  String? catchPhrase;
-  String? bs;
-
-  Company({this.name, this.catchPhrase, this.bs});
 }
