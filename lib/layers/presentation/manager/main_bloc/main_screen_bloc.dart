@@ -9,33 +9,29 @@ part 'main_screen_state.dart';
 part 'main_screen_bloc.freezed.dart';
 
 class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
-  final PostRepository repository = getIt<PostRepository>();
-
+  final repository = getIt<PostRepository>();
+  List<PostEntity> postList = [];
   MainScreenBloc() : super(MainScreenState.initial()) {
     on<MainScreenEvent>(_onPageLoad);
   }
-
-  Future<void> _onPageLoad(MainScreenEvent event, Emitter<MainScreenState> emit) async {
+  _onPageLoad(MainScreenEvent event, Emitter emit) async {
     await event.map(
       started: (_) async {
-        final postList = await repository.getPosts();
+        postList = await repository.getPosts();
         emit(state.copyWith(postList: postList, loading: false));
       },
       refresh: (_) async {
         emit(state.copyWith(loading: true));
-        final postList = await repository.getPosts();
+        postList = await repository.getPosts();
         emit(state.copyWith(postList: postList, loading: false));
       },
       appEnd: (_) {},
       searchByUserId: (value) async {
         if (value.value.isNotEmpty) {
-          final userId = int.tryParse(value.value);
-          if (userId != null) {
-            final postList = await repository.getPostsByUserId(userId: userId);
-            emit(state.copyWith(postList: postList, loading: false));
-          }
+          List<PostEntity>  list =
+              await repository.getPostsByUserId(userId: int.parse(value.value));
+          emit(state.copyWith(postList: list, loading: false));
         } else {
-          final postList = await repository.getPosts();
           emit(state.copyWith(postList: postList, loading: false));
         }
       },
